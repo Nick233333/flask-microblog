@@ -7,9 +7,14 @@
             <td>
                 <h1>User: {{ user.username }}</h1>
                 {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
-                {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
+                {% if user.last_seen %}<p>最近登录时间: {{ user.last_seen }}</p>{% endif %}
+                <p>粉丝 {{ user.followers.count() }} , 关注 {{ user.followed.count() }} .</p>
                 {% if user == current_user %}
-                <p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
+                <p><a href="{{ url_for('edit_profile') }}">编辑个人资料</a></p>
+                {% elif not current_user.is_following(user) %}
+                <p><a href="{{ url_for('follow', username=user.username) }}">关注</a></p>
+                {% else %}
+                <p><a href="{{ url_for('unfollow', username=user.username) }}">取消关注</a></p>
                 {% endif %}
             </td>
         </tr>
