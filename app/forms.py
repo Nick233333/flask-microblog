@@ -5,17 +5,18 @@ from app.models import User
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    remember_me = BooleanField('Remember Me')
+    username = StringField('用户名', validators=[DataRequired()])
+    password = PasswordField('密码', validators=[DataRequired()])
+    remember_me = BooleanField('记住我')
     submit = SubmitField('登录')
 
+
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    username = StringField('用户名', validators=[DataRequired()])
+    email = StringField('邮箱', validators=[DataRequired(), Email()])
+    password = PasswordField('密码', validators=[DataRequired()])
     password2 = PasswordField(
-        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+        '确认密码', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('注册')
 
     def validate_username(self, username):
@@ -28,9 +29,10 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError('邮箱已存在')
 
+
 class EditProfileForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
+    username = StringField('用户名', validators=[DataRequired()])
+    about_me = TextAreaField('关于', validators=[Length(min=0, max=140)])
     submit = SubmitField('提交')
 
     def __init__(self, original_username, *args, **kwargs):
@@ -43,10 +45,20 @@ class EditProfileForm(FlaskForm):
             if user is not None:
                 raise ValidationError('用户名已存在')
 
+
 class PostForm(FlaskForm):
     post = TextAreaField('说点什么', validators=[
         DataRequired(), Length(min=1, max=140)])
     submit = SubmitField('发布')
 
 
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField('邮箱', validators=[DataRequired(), Email()])
+    submit = SubmitField('重设密码')
 
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('密码', validators=[DataRequired()])
+    password2 = PasswordField(
+        '确认密码', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('重设密码')
