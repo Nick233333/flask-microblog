@@ -7,6 +7,7 @@ from flask_login import LoginManager
 from logging.handlers import SMTPHandler, RotatingFileHandler
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
+from flask_moment import Moment
 from config import Config
 
 app = Flask(__name__)
@@ -18,6 +19,7 @@ login.login_view = 'login'
 login.login_message = u"需要登录才能进行操作"
 mail = Mail(app)
 bootstrap = Bootstrap(app)
+moment = Moment(app)
 
 if not app.debug:
     if app.config['MAIL_SERVER']:
