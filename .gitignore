@@ -35,7 +35,7 @@ nosetests.xml
 .project
 .pydevproject
 
-venv/
+env3.7/
 app.db
 microblog.log*
 .DS_Store
